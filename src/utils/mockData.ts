@@ -1,3 +1,4 @@
+
 // Mock data for footage marketplace
 
 export type MediaType = 'video' | 'photo';
@@ -279,7 +280,7 @@ export const api = {
               name: 'Demo User',
               email: 'demo@example.com',
               avatar: 'https://i.pravatar.cc/150?u=demo@example.com',
-              role: 'user',
+              role: 'creator',  // Changed from 'user' to 'creator'
               createdAt: new Date().toISOString()
             },
           });
@@ -304,7 +305,7 @@ export const api = {
             name: 'Google User',
             email: 'google@example.com',
             avatar: 'https://i.pravatar.cc/150?u=google@example.com',
-            role: 'user',
+            role: 'buyer',  // Changed from 'user' to 'buyer'
             createdAt: new Date().toISOString()
           },
         });
@@ -324,7 +325,7 @@ export const api = {
               name: name || 'New User',
               email: email,
               avatar: `https://i.pravatar.cc/150?u=${email}`,
-              role: 'user',
+              role: 'creator',  // Changed from 'user' to 'creator'
               createdAt: new Date().toISOString()
             },
           });

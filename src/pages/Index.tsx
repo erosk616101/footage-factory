@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { fadeIn } from '@/utils/animations';
 import Navbar from '@/components/Navbar';
 import SearchBar from '@/components/SearchBar';
-import { MediaCard } from '@/components/MediaCard';
-import { mediaItems } from '@/utils/mockData';
+import MediaCard from '@/components/MediaCard';
+import { mockMedia } from '@/utils/mockData';
 import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
@@ -74,7 +74,7 @@ const Index = () => {
           </motion.div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {mediaItems.slice(0, 8).map((item) => (
+            {mockMedia.slice(0, 8).map((item) => (
               <MediaCard key={item.id} item={item} />
             ))}
           </div>
