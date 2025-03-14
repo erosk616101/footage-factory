@@ -1,4 +1,3 @@
-
 // Mock data for footage marketplace
 
 export type MediaType = 'video' | 'photo';
@@ -268,26 +267,69 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const api = {
   // Authentication
-  login: async (email: string, password: string) => {
-    await delay(800);
-    const user = users.find(u => u.email === email);
-    if (user && password.length > 0) {
-      return { success: true, user };
-    }
-    return { success: false, error: "Invalid credentials" };
+  login: (email: string, password: string): Promise<{ success: boolean; user?: User; error?: string }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Mock login logic
+        if (email === 'demo@example.com' && password === 'password') {
+          resolve({
+            success: true,
+            user: {
+              id: '1',
+              name: 'Demo User',
+              email: 'demo@example.com',
+              avatar: 'https://i.pravatar.cc/150?u=demo@example.com',
+            },
+          });
+        } else {
+          resolve({
+            success: false,
+            error: 'Invalid email or password',
+          });
+        }
+      }, 1000);
+    });
   },
   
-  googleLogin: async () => {
-    await delay(1000);
-    return { success: true, user: users[0] };
+  googleLogin: (): Promise<{ success: boolean; user?: User; error?: string }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Mock Google login - always succeed for demo
+        resolve({
+          success: true,
+          user: {
+            id: '1',
+            name: 'Google User',
+            email: 'google@example.com',
+            avatar: 'https://i.pravatar.cc/150?u=google@example.com',
+          },
+        });
+      }, 1000);
+    });
   },
   
-  register: async (name: string, email: string, password: string) => {
-    await delay(1200);
-    if (users.some(u => u.email === email)) {
-      return { success: false, error: "Email already in use" };
-    }
-    return { success: true, user: { id: generateId(), name, email, avatar: "", role: "buyer", createdAt: new Date().toISOString() } };
+  register: (name: string, email: string, password: string): Promise<{ success: boolean; user?: User; error?: string }> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // Mock register logic - always succeed for demo
+        if (email && password) {
+          resolve({
+            success: true,
+            user: {
+              id: '1',
+              name: name || 'New User',
+              email: email,
+              avatar: `https://i.pravatar.cc/150?u=${email}`,
+            },
+          });
+        } else {
+          resolve({
+            success: false,
+            error: 'Please provide valid information',
+          });
+        }
+      }, 1000);
+    });
   },
   
   // Media

@@ -12,6 +12,18 @@ interface AuthFormProps {
   onSuccess?: () => void;
 }
 
+// Add interface for API response to fix type errors
+interface AuthResponse {
+  success: boolean;
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  error?: string;
+}
+
 const AuthForm: React.FC<AuthFormProps> = ({ mode, onSuccess }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -65,7 +77,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onSuccess }) => {
     setIsLoading(true);
     
     try {
-      let response;
+      let response: AuthResponse;
       
       if (mode === 'login') {
         response = await api.login(formData.email, formData.password);
@@ -107,7 +119,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onSuccess }) => {
     setIsLoading(true);
     
     try {
-      const response = await api.googleLogin();
+      const response: AuthResponse = await api.googleLogin();
       
       if (response.success) {
         toast({
