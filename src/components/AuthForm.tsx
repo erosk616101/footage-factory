@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,8 @@ interface AuthResponse {
     name: string;
     email: string;
     avatar: string;
+    role: string;
+    createdAt: string;
   };
   error?: string;
 }
@@ -92,10 +93,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onSuccess }) => {
           variant: 'default',
         });
         
+        // Redirect based on user role
+        if (response.user?.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
+        
         if (onSuccess) {
           onSuccess();
-        } else {
-          navigate('/');
         }
       } else {
         toast({
@@ -128,10 +134,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onSuccess }) => {
           variant: 'default',
         });
         
+        // Redirect based on user role
+        if (response.user?.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
+        
         if (onSuccess) {
           onSuccess();
-        } else {
-          navigate('/');
         }
       } else {
         toast({
@@ -289,7 +300,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onSuccess }) => {
               alt="Google"
               className="w-5 h-5 mr-2"
             />
-            Google
+            {mode === 'login' ? 'Sign in with Google' : 'Sign up with Google'}
           </Button>
         </div>
       </div>

@@ -279,6 +279,8 @@ export const api = {
               name: 'Demo User',
               email: 'demo@example.com',
               avatar: 'https://i.pravatar.cc/150?u=demo@example.com',
+              role: 'user',
+              createdAt: new Date().toISOString()
             },
           });
         } else {
@@ -302,6 +304,8 @@ export const api = {
             name: 'Google User',
             email: 'google@example.com',
             avatar: 'https://i.pravatar.cc/150?u=google@example.com',
+            role: 'user',
+            createdAt: new Date().toISOString()
           },
         });
       }, 1000);
@@ -320,6 +324,8 @@ export const api = {
               name: name || 'New User',
               email: email,
               avatar: `https://i.pravatar.cc/150?u=${email}`,
+              role: 'user',
+              createdAt: new Date().toISOString()
             },
           });
         } else {
