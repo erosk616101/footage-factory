@@ -3,7 +3,8 @@ import React from 'react';
 import UserLayout from '@/layouts/UserLayout';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Eye, Edit, Trash2, Upload } from 'lucide-react';
+import { Eye, Edit, Trash2, Upload, Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // Mock data
 const uploads = [
@@ -14,6 +15,12 @@ const uploads = [
 ];
 
 const Uploads = () => {
+  const navigate = useNavigate();
+
+  const handleUploadNew = () => {
+    navigate('/user-dashboard/uploads/new');
+  };
+
   return (
     <UserLayout>
       <div className="space-y-6">
@@ -23,8 +30,8 @@ const Uploads = () => {
             <p className="text-gray-500 mt-1">Manage your content uploads</p>
           </div>
           
-          <Button className="flex items-center gap-2">
-            <Upload size={18} />
+          <Button className="flex items-center gap-2" onClick={handleUploadNew}>
+            <Plus size={18} />
             Upload New Content
           </Button>
         </div>
