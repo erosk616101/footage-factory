@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -25,12 +26,12 @@ const Index = () => {
       {/* Hero Section with Parallax Effect - Updated Background */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <motion.div 
-          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2700&q=90')] bg-cover bg-center"
+          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558865869-c93f6f8482af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2700&q=90')] bg-cover bg-center"
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
         ></motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-950/80 via-gray-900/70 to-gray-800/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-950/90 via-gray-900/70 to-gray-800/50"></div>
         
         <motion.div 
           className="container mx-auto px-4 relative z-10 text-center"
