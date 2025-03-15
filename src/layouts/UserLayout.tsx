@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { 
   User, Upload, Download, CreditCard, Bell, 
   Settings, BarChart, Wallet, Home, LogOut
@@ -36,6 +36,12 @@ interface UserLayoutProps {
 
 const UserLayout = ({ children }: UserLayoutProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Helper to check if a path is active
+  const isActive = (path: string) => {
+    return location.pathname === path || location.pathname === `/user-dashboard${path}`;
+  };
   
   return (
     <SidebarProvider>
@@ -64,7 +70,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive={true}>
+                    <SidebarMenuButton asChild isActive={isActive("")}>
                       <Link to="/user-dashboard">
                         <User />
                         <span>Dashboard</span>
@@ -72,7 +78,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild onClick={() => navigate("/browse")}>
+                    <SidebarMenuButton asChild isActive={false} onClick={() => navigate("/browse")}>
                       <a>
                         <Home />
                         <span>Browse Media</span>
@@ -88,7 +94,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/uploads")}>
                       <Link to="/user-dashboard/uploads">
                         <Upload />
                         <span>My Uploads</span>
@@ -96,7 +102,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/downloads")}>
                       <Link to="/user-dashboard/downloads">
                         <Download />
                         <span>My Downloads</span>
@@ -104,7 +110,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/earnings")}>
                       <Link to="/user-dashboard/earnings">
                         <CreditCard />
                         <span>Earnings</span>
@@ -112,7 +118,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/analytics")}>
                       <Link to="/user-dashboard/analytics">
                         <BarChart />
                         <span>Analytics</span>
@@ -128,7 +134,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/profile")}>
                       <Link to="/user-dashboard/profile">
                         <User />
                         <span>Profile</span>
@@ -136,7 +142,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/notifications")}>
                       <Link to="/user-dashboard/notifications">
                         <Bell />
                         <span>Notifications</span>
@@ -144,7 +150,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/settings")}>
                       <Link to="/user-dashboard/settings">
                         <Settings />
                         <span>Settings</span>
@@ -152,7 +158,7 @@ const UserLayout = ({ children }: UserLayoutProps) => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild isActive={isActive("/payouts")}>
                       <Link to="/user-dashboard/payouts">
                         <Wallet />
                         <span>Payout History</span>
