@@ -1,15 +1,18 @@
+
 import React, { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
+import { useNavigate, Routes, Route, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Download, Edit, Eye, Trash2, Upload, User, CreditCard, 
-  Settings, Image, Video, Bell, LogOut, Menu, Home,
-  ChevronLeft, ChevronRight, PanelLeft
+  Settings, Image, Video, Bell, LogOut, Home, Plus,
+  Star, Heart, Wallet, BarChart, FileText, Folder,
+  MessageSquare, HelpCircle
 } from 'lucide-react';
 import { fadeIn } from '@/utils/animations';
-import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import {
   SidebarProvider,
   Sidebar,
@@ -28,23 +31,30 @@ import {
   SidebarGroupContent
 } from '@/components/ui/sidebar';
 
+// Mock data - in a real app this would come from API
+const uploads = [
+  { id: '1', title: 'Beach Sunset', type: 'photo', date: '2023-05-15', downloads: 12, earnings: 24.99 },
+  { id: '2', title: 'City Traffic', type: 'video', date: '2023-06-02', downloads: 35, earnings: 87.50 },
+  { id: '3', title: 'Mountain View', type: 'photo', date: '2023-06-12', downloads: 8, earnings: 16.00 },
+  { id: '4', title: 'Office Meeting', type: 'video', date: '2023-07-01', downloads: 20, earnings: 50.00 },
+];
+
+const purchases = [
+  { id: '1', title: 'Aerial City View', type: 'video', date: '2023-05-20', price: 39.99 },
+  { id: '2', title: 'Abstract Background', type: 'photo', date: '2023-06-15', price: 15.00 },
+];
+
+const mockUser = {
+  name: 'Jane Doe',
+  email: 'jane.doe@example.com',
+  avatar: 'https://i.pravatar.cc/150?img=5',
+  role: 'creator'
+};
+
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('uploads');
   
-  // Mock data - in a real app this would come from API
-  const uploads = [
-    { id: '1', title: 'Beach Sunset', type: 'photo', date: '2023-05-15', downloads: 12, earnings: 24.99 },
-    { id: '2', title: 'City Traffic', type: 'video', date: '2023-06-02', downloads: 35, earnings: 87.50 },
-    { id: '3', title: 'Mountain View', type: 'photo', date: '2023-06-12', downloads: 8, earnings: 16.00 },
-    { id: '4', title: 'Office Meeting', type: 'video', date: '2023-07-01', downloads: 20, earnings: 50.00 },
-  ];
-  
-  const purchases = [
-    { id: '1', title: 'Aerial City View', type: 'video', date: '2023-05-20', price: 39.99 },
-    { id: '2', title: 'Abstract Background', type: 'photo', date: '2023-06-15', price: 15.00 },
-  ];
-
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -60,7 +70,7 @@ const UserDashboard = () => {
 
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel>Menu</SidebarGroupLabel>
+              <SidebarGroupLabel>Navigation</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
@@ -75,7 +85,7 @@ const UserDashboard = () => {
                     <SidebarMenuButton asChild isActive={true}>
                       <a>
                         <User />
-                        <span>My Dashboard</span>
+                        <span>Dashboard</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -96,7 +106,7 @@ const UserDashboard = () => {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild onClick={() => { setActiveTab('uploads') }}>
+                    <SidebarMenuButton asChild onClick={() => setActiveTab('uploads')}>
                       <a>
                         <Upload />
                         <span>My Uploads</span>
@@ -105,7 +115,7 @@ const UserDashboard = () => {
                     <SidebarMenuBadge>{uploads.length}</SidebarMenuBadge>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild onClick={() => { setActiveTab('purchases') }}>
+                    <SidebarMenuButton asChild onClick={() => setActiveTab('purchases')}>
                       <a>
                         <Download />
                         <span>My Purchases</span>
@@ -114,10 +124,18 @@ const UserDashboard = () => {
                     <SidebarMenuBadge>{purchases.length}</SidebarMenuBadge>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild onClick={() => { setActiveTab('earnings') }}>
+                    <SidebarMenuButton asChild onClick={() => setActiveTab('earnings')}>
                       <a>
                         <CreditCard />
                         <span>Earnings</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild onClick={() => setActiveTab('analytics')}>
+                      <a>
+                        <BarChart />
+                        <span>Analytics</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -130,7 +148,15 @@ const UserDashboard = () => {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild onClick={() => { setActiveTab('settings') }}>
+                    <SidebarMenuButton asChild onClick={() => setActiveTab('profile')}>
+                      <a>
+                        <User />
+                        <span>Profile</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild onClick={() => setActiveTab('settings')}>
                       <a>
                         <Settings />
                         <span>Settings</span>
@@ -169,13 +195,12 @@ const UserDashboard = () => {
 
         {/* Main content area */}
         <SidebarInset className="bg-gray-50">
+          <DashboardHeader user={mockUser} />
+          
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <div className="flex items-center gap-2">
-                  <SidebarTrigger className="md:hidden" />
-                  <h1 className="text-2xl font-bold">My Dashboard</h1>
-                </div>
+                <h1 className="text-2xl font-bold">Creator Dashboard</h1>
                 <p className="text-gray-500 mt-1">Manage your uploads and track earnings</p>
               </div>
               
@@ -188,11 +213,12 @@ const UserDashboard = () => {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
               <Tabs defaultValue={activeTab} value={activeTab} className="w-full" onValueChange={setActiveTab}>
                 <div className="px-6 pt-4">
-                  <TabsList className="grid grid-cols-4 w-full max-w-md">
+                  <TabsList className="grid grid-cols-5 w-full max-w-2xl">
                     <TabsTrigger value="uploads">My Uploads</TabsTrigger>
                     <TabsTrigger value="earnings">Earnings</TabsTrigger>
                     <TabsTrigger value="purchases">Purchases</TabsTrigger>
-                    <TabsTrigger value="settings">Settings</TabsTrigger>
+                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                    <TabsTrigger value="profile">Profile</TabsTrigger>
                   </TabsList>
                 </div>
 
@@ -219,13 +245,13 @@ const UserDashboard = () => {
                             <TableCell>${item.earnings.toFixed(2)}</TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
-                                <Button variant="ghost" size="sm">
+                                <Button variant="ghost" size="icon-sm">
                                   <Eye size={16} />
                                 </Button>
-                                <Button variant="ghost" size="sm">
+                                <Button variant="ghost" size="icon-sm">
                                   <Edit size={16} />
                                 </Button>
-                                <Button variant="ghost" size="sm">
+                                <Button variant="ghost" size="icon-sm">
                                   <Trash2 size={16} />
                                 </Button>
                               </div>
@@ -300,33 +326,97 @@ const UserDashboard = () => {
                   </div>
                 </TabsContent>
                 
+                <TabsContent value="analytics" className="p-6">
+                  <div className="space-y-8">
+                    <div className="bg-gray-50 rounded-xl p-6">
+                      <h3 className="text-xl font-semibold mb-4">View Statistics</h3>
+                      <div className="h-64 flex items-center justify-center border border-dashed border-gray-300 rounded-lg">
+                        <p className="text-gray-500">Views chart will be displayed here</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 rounded-xl p-6">
+                      <h3 className="text-xl font-semibold mb-4">Top Performing Content</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {uploads.slice(0, 3).map((item) => (
+                          <div key={item.id} className="bg-white rounded-lg border p-4">
+                            <h4 className="font-medium">{item.title}</h4>
+                            <p className="text-sm text-gray-500">{item.downloads} downloads</p>
+                            <p className="text-sm font-medium mt-2">${item.earnings.toFixed(2)} earned</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="profile" className="p-6">
+                  <div className="max-w-xl">
+                    <h3 className="text-xl font-semibold mb-4">Profile Settings</h3>
+                    
+                    <div className="space-y-6">
+                      <div className="flex items-center gap-4">
+                        <div className="h-20 w-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                          {mockUser.avatar ? (
+                            <img src={mockUser.avatar} alt={mockUser.name} className="h-full w-full object-cover" />
+                          ) : (
+                            <User size={32} />
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-medium">{mockUser.name}</h4>
+                          <p className="text-sm text-gray-500">{mockUser.email}</p>
+                          <Button variant="outline" size="sm" className="mt-2">Change Avatar</Button>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Display Name
+                          </label>
+                          <input 
+                            type="text" 
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                            defaultValue={mockUser.name}
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Email
+                          </label>
+                          <input 
+                            type="email" 
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                            defaultValue={mockUser.email}
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Bio
+                          </label>
+                          <textarea
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                            rows={4}
+                            defaultValue="Stock photographer specializing in nature and travel imagery."
+                          />
+                        </div>
+                        
+                        <div className="pt-4">
+                          <Button>Save Profile</Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+
                 <TabsContent value="settings" className="p-6">
                   <div className="max-w-xl">
                     <h3 className="text-xl font-semibold mb-4">Account Settings</h3>
                     
                     <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Full Name
-                        </label>
-                        <input 
-                          type="text" 
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md"
-                          defaultValue="Jane Doe"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Email
-                        </label>
-                        <input 
-                          type="email" 
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md"
-                          defaultValue="jane.doe@example.com"
-                        />
-                      </div>
-                      
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Payout Method
@@ -338,8 +428,31 @@ const UserDashboard = () => {
                         </select>
                       </div>
                       
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Default License Type
+                        </label>
+                        <select className="w-full px-4 py-2 border border-gray-300 rounded-md">
+                          <option>Standard License</option>
+                          <option>Extended License</option>
+                          <option>Custom License</option>
+                        </select>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <input 
+                          type="checkbox" 
+                          id="notifications" 
+                          className="h-4 w-4 rounded border-gray-300"
+                          defaultChecked
+                        />
+                        <label htmlFor="notifications" className="text-sm text-gray-700">
+                          Email notifications for sales
+                        </label>
+                      </div>
+                      
                       <div className="pt-4">
-                        <Button>Save Changes</Button>
+                        <Button>Save Settings</Button>
                       </div>
                     </div>
                   </div>

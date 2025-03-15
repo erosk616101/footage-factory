@@ -266,7 +266,7 @@ export const api = {
     return {
       success: true,
       user: {
-        id: Math.floor(Math.random() * 1000) + 300,
+        id: `${Math.floor(Math.random() * 1000) + 300}`, // Convert to string
         name,
         email,
         avatar: `https://i.pravatar.cc/150?u=${email}`,
