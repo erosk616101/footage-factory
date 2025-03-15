@@ -19,6 +19,7 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import Auth from "./pages/Auth";
 import Browse from "./pages/Browse";
 import Pricing from "./pages/Pricing";
+import AssetDetail from "./pages/AssetDetail";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           {/* Main Public Pages (Landing & Store) */}
           <Route path="/" element={<Index />} />
           <Route path="/browse" element={<Browse />} />
+          <Route path="/detail/:id" element={<AssetDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/success" element={<CheckoutSuccess />} />
