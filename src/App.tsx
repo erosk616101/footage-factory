@@ -8,6 +8,11 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import ContentPage from "./pages/admin/ContentPage";
+import UsersPage from "./pages/admin/UsersPage";
+import SalesPage from "./pages/admin/SalesPage";
+import ReportsPage from "./pages/admin/ReportsPage";
+import SettingsPage from "./pages/admin/SettingsPage";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
@@ -26,6 +31,11 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin-dashboard/content" element={<ContentPage />} />
+          <Route path="/admin-dashboard/users" element={<UsersPage />} />
+          <Route path="/admin-dashboard/sales" element={<SalesPage />} />
+          <Route path="/admin-dashboard/reports" element={<ReportsPage />} />
+          <Route path="/admin-dashboard/settings" element={<SettingsPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/success" element={<CheckoutSuccess />} />
