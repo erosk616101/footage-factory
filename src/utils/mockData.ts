@@ -1,3 +1,4 @@
+
 export interface MediaItem {
   id: string;
   title: string;
@@ -12,7 +13,7 @@ export interface MediaItem {
   duration?: string; // only for videos
   size: string;
   tags: string[];
-  category: string; // Adding the missing category property
+  category: string;
   downloads: number;
   views: number;
   uploadDate: string;
@@ -182,7 +183,7 @@ export interface User {
   name: string;
   email: string;
   profilePicture: string;
-  role: 'admin' | 'user';
+  role: 'admin' | 'creator' | 'buyer';
 }
 
 export const mockUsers: User[] = [
@@ -198,6 +199,98 @@ export const mockUsers: User[] = [
     name: 'Regular User',
     email: 'user@example.com',
     profilePicture: 'https://i.pravatar.cc/150?img=5',
-    role: 'user',
+    role: 'buyer',
   },
 ];
+
+// Adding categories for FilterPanel component
+export const categories = [
+  'Nature',
+  'Travel',
+  'Business',
+  'Technology',
+  'Food',
+  'Illustrations',
+  'Abstract',
+  'Animals',
+  'Architecture',
+  'Fashion',
+  'People',
+  'Sports'
+];
+
+// Adding mock API for AuthForm component
+export const api = {
+  login: async (email: string, password: string) => {
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Mock response
+    if (email === 'admin@example.com' && password === 'password') {
+      return {
+        success: true,
+        user: {
+          id: '201',
+          name: 'Admin User',
+          email: 'admin@example.com',
+          avatar: 'https://i.pravatar.cc/150?img=4',
+          role: 'admin',
+          createdAt: '2023-01-01',
+        },
+      };
+    } else if (email === 'user@example.com' && password === 'password') {
+      return {
+        success: true,
+        user: {
+          id: '202',
+          name: 'Regular User',
+          email: 'user@example.com',
+          avatar: 'https://i.pravatar.cc/150?img=5',
+          role: 'buyer',
+          createdAt: '2023-01-15',
+        },
+      };
+    } else {
+      return {
+        success: false,
+        error: 'Invalid email or password',
+      };
+    }
+  },
+  
+  register: async (name: string, email: string, password: string) => {
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Mock successful registration
+    return {
+      success: true,
+      user: {
+        id: Math.floor(Math.random() * 1000) + 300,
+        name,
+        email,
+        avatar: `https://i.pravatar.cc/150?u=${email}`,
+        role: 'buyer',
+        createdAt: new Date().toISOString().split('T')[0],
+      },
+    };
+  },
+  
+  googleLogin: async () => {
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Mock Google login (always successful)
+    return {
+      success: true,
+      user: {
+        id: '203',
+        name: 'Google User',
+        email: 'google.user@gmail.com',
+        avatar: 'https://i.pravatar.cc/150?img=7',
+        role: 'creator',
+        createdAt: '2023-02-10',
+      },
+    };
+  },
+};

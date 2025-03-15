@@ -67,7 +67,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, featured = false }) => {
           {/* Category chip */}
           <div className="absolute top-3 right-3">
             <span className="text-xs font-medium bg-white/90 backdrop-blur-sm text-gray-800 px-2.5 py-1 rounded-full">
-              {item.categories[0]}
+              {item.category}
             </span>
           </div>
           
@@ -93,11 +93,11 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, featured = false }) => {
           <h3 className="font-medium text-gray-900 line-clamp-1">{item.title}</h3>
           <div className="flex items-center space-x-2">
             <img 
-              src={item.creator.avatar} 
-              alt={item.creator.name}
+              src={`https://i.pravatar.cc/150?u=${item.authorId}`}
+              alt={item.author}
               className="w-5 h-5 rounded-full object-cover"
             />
-            <span className="text-xs text-gray-600">{item.creator.name}</span>
+            <span className="text-xs text-gray-600">{item.author}</span>
           </div>
         </div>
       </Link>
