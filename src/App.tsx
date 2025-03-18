@@ -20,6 +20,8 @@ import Auth from "./pages/Auth";
 import Browse from "./pages/Browse";
 import Pricing from "./pages/Pricing";
 import AssetDetail from "./pages/AssetDetail";
+import UploadAsset from "./pages/user/UploadAsset";
+import EditAsset from "./pages/user/EditAsset";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +44,8 @@ const App = () => (
           
           {/* User Dashboard Routes */}
           <Route path="/user-dashboard/*" element={<UserDashboard />} />
+          <Route path="/user-dashboard/uploads/new" element={<UploadAsset />} />
+          <Route path="/user-dashboard/uploads/edit/:id" element={<EditAsset />} />
           
           {/* Admin Dashboard Routes */}
           <Route path="/admin-dashboard" element={<AdminDashboard />} />

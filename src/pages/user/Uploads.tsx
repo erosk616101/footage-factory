@@ -64,6 +64,11 @@ const Uploads = () => {
     navigate('/user-dashboard/uploads/new');
   };
 
+  const handleEdit = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/user-dashboard/uploads/edit/${id}`);
+  };
+
   return (
     <UserLayout>
       <div className="space-y-6">
@@ -130,7 +135,10 @@ const Uploads = () => {
                             <Eye className="mr-2 h-4 w-4" />
                             <span>View Details</span>
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer">
+                          <DropdownMenuItem 
+                            className="cursor-pointer"
+                            onClick={(e) => handleEdit(item.id, e)}
+                          >
                             <Edit className="mr-2 h-4 w-4" />
                             <span>Edit</span>
                           </DropdownMenuItem>
