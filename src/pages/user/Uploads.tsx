@@ -3,15 +3,54 @@ import React from 'react';
 import UserLayout from '@/layouts/UserLayout';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Eye, Edit, Trash2, Upload, Plus } from 'lucide-react';
+import { Eye, Edit, Trash2, Plus, MoreHorizontal, Share, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
-// Mock data
+// Mock data with thumbnail URLs added
 const uploads = [
-  { id: '1', title: 'Beach Sunset', type: 'photo', date: '2023-05-15', downloads: 12, earnings: 24.99 },
-  { id: '2', title: 'City Traffic', type: 'video', date: '2023-06-02', downloads: 35, earnings: 87.50 },
-  { id: '3', title: 'Mountain View', type: 'photo', date: '2023-06-12', downloads: 8, earnings: 16.00 },
-  { id: '4', title: 'Office Meeting', type: 'video', date: '2023-07-01', downloads: 20, earnings: 50.00 },
+  { 
+    id: '1', 
+    title: 'Beach Sunset', 
+    type: 'photo', 
+    date: '2023-05-15', 
+    downloads: 12, 
+    earnings: 24.99,
+    thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80'
+  },
+  { 
+    id: '2', 
+    title: 'City Traffic', 
+    type: 'video', 
+    date: '2023-06-02', 
+    downloads: 35, 
+    earnings: 87.50,
+    thumbnail: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80'
+  },
+  { 
+    id: '3', 
+    title: 'Mountain View', 
+    type: 'photo', 
+    date: '2023-06-12', 
+    downloads: 8, 
+    earnings: 16.00,
+    thumbnail: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80'
+  },
+  { 
+    id: '4', 
+    title: 'Office Meeting', 
+    type: 'video', 
+    date: '2023-07-01', 
+    downloads: 20, 
+    earnings: 50.00,
+    thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80'
+  },
 ];
 
 const Uploads = () => {
@@ -41,34 +80,64 @@ const Uploads = () => {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Preview</TableHead>
                   <TableHead>Title</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Upload Date</TableHead>
                   <TableHead>Downloads</TableHead>
                   <TableHead>Earnings</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {uploads.map((item) => (
                   <TableRow key={item.id}>
+                    <TableCell>
+                      <div className="h-14 w-20 rounded-md overflow-hidden">
+                        <img 
+                          src={item.thumbnail} 
+                          alt={item.title} 
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    </TableCell>
                     <TableCell className="font-medium">{item.title}</TableCell>
                     <TableCell className="capitalize">{item.type}</TableCell>
                     <TableCell>{item.date}</TableCell>
                     <TableCell>{item.downloads}</TableCell>
                     <TableCell>${item.earnings.toFixed(2)}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon-sm">
-                          <Eye size={16} />
-                        </Button>
-                        <Button variant="ghost" size="icon-sm">
-                          <Edit size={16} />
-                        </Button>
-                        <Button variant="ghost" size="icon-sm">
-                          <Trash2 size={16} />
-                        </Button>
-                      </div>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Open menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-[160px]">
+                          <DropdownMenuItem className="cursor-pointer">
+                            <Eye className="mr-2 h-4 w-4" />
+                            <span>View</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="cursor-pointer">
+                            <Edit className="mr-2 h-4 w-4" />
+                            <span>Edit</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="cursor-pointer">
+                            <Share className="mr-2 h-4 w-4" />
+                            <span>Share</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="cursor-pointer">
+                            <Download className="mr-2 h-4 w-4" />
+                            <span>Stats</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="cursor-pointer text-red-600">
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            <span>Delete</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))}
