@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserLayout from '@/layouts/UserLayout';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -48,6 +49,12 @@ const purchases = [
 ];
 
 const Downloads = () => {
+  const navigate = useNavigate();
+
+  const handleRowClick = (id: string) => {
+    navigate(`/detail/${id}`);
+  };
+
   return (
     <UserLayout>
       <div className="space-y-6">
@@ -71,8 +78,12 @@ const Downloads = () => {
               </TableHeader>
               <TableBody>
                 {purchases.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
+                  <TableRow 
+                    key={item.id} 
+                    onClick={() => handleRowClick(item.id)}
+                    className="cursor-pointer hover:bg-gray-50"
+                  >
+                    <TableCell onClick={(e) => e.stopPropagation()}>
                       <div className="h-14 w-20 rounded-md overflow-hidden">
                         <img 
                           src={item.thumbnail} 
@@ -85,7 +96,7 @@ const Downloads = () => {
                     <TableCell className="capitalize">{item.type}</TableCell>
                     <TableCell>{item.date}</TableCell>
                     <TableCell>${item.price.toFixed(2)}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon">
@@ -94,13 +105,16 @@ const Downloads = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-[160px]">
+                          <DropdownMenuItem 
+                            className="cursor-pointer"
+                            onClick={() => navigate(`/detail/${item.id}`)}
+                          >
+                            <Eye className="mr-2 h-4 w-4" />
+                            <span>View Details</span>
+                          </DropdownMenuItem>
                           <DropdownMenuItem className="cursor-pointer">
                             <Download className="mr-2 h-4 w-4" />
                             <span>Download</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="cursor-pointer">
-                            <Eye className="mr-2 h-4 w-4" />
-                            <span>Preview</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem className="cursor-pointer">
                             <Share className="mr-2 h-4 w-4" />
@@ -108,7 +122,7 @@ const Downloads = () => {
                           </DropdownMenuItem>
                           <DropdownMenuItem className="cursor-pointer">
                             <Info className="mr-2 h-4 w-4" />
-                            <span>Details</span>
+                            <span>Info</span>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

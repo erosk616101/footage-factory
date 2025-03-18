@@ -56,6 +56,10 @@ const uploads = [
 const Uploads = () => {
   const navigate = useNavigate();
 
+  const handleRowClick = (id: string) => {
+    navigate(`/detail/${id}`);
+  };
+
   const handleUploadNew = () => {
     navigate('/user-dashboard/uploads/new');
   };
@@ -91,8 +95,12 @@ const Uploads = () => {
               </TableHeader>
               <TableBody>
                 {uploads.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
+                  <TableRow 
+                    key={item.id} 
+                    onClick={() => handleRowClick(item.id)}
+                    className="cursor-pointer hover:bg-gray-50"
+                  >
+                    <TableCell onClick={(e) => e.stopPropagation()}>
                       <div className="h-14 w-20 rounded-md overflow-hidden">
                         <img 
                           src={item.thumbnail} 
@@ -106,7 +114,7 @@ const Uploads = () => {
                     <TableCell>{item.date}</TableCell>
                     <TableCell>{item.downloads}</TableCell>
                     <TableCell>${item.earnings.toFixed(2)}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon">
@@ -115,9 +123,12 @@ const Uploads = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-[160px]">
-                          <DropdownMenuItem className="cursor-pointer">
+                          <DropdownMenuItem 
+                            className="cursor-pointer"
+                            onClick={() => navigate(`/detail/${item.id}`)}
+                          >
                             <Eye className="mr-2 h-4 w-4" />
-                            <span>View</span>
+                            <span>View Details</span>
                           </DropdownMenuItem>
                           <DropdownMenuItem className="cursor-pointer">
                             <Edit className="mr-2 h-4 w-4" />
